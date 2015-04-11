@@ -14,6 +14,7 @@
     "hjs": "~0.0.6",
     "hogan-express": "~0.5.2",
     "less": "^2.3.1",
+    "less-middleware": "1.0.x",
     "less-plugin-clean-css": "^1.5.0",
     "log": "*",
     "morgan": "~1.0.0",
