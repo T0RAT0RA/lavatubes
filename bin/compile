@@ -1,0 +1,48 @@
+#!/bin/bash
+#Compile LESS and JS files
+
+cd $(dirname $0)
+
+WEB_PATH="../public"
+
+LESS_COMPILER="../node_modules/.bin/lessc"
+MAIN_LESS="$WEB_PATH/less/main.less"
+MAIN_CSS="$WEB_PATH/css/main.css"
+
+REQUIREJS_COMPILER="../node_modules/.bin/r.js"
+REQUIREJS_BUILD_FILE="$WEB_PATH/js/build.js"
+
+#-------------------------------------
+# HELPERS
+#-------------------------------------
+#COLOR:
+#How to use: echo $(color red "Some error in red")
+function color {
+    local color=${1}
+    shift
+    local text="${@}"
+
+    case ${color} in
+        red    ) tput setaf 1 ;;
+        green  ) tput setaf 2 ;;
+        yellow ) tput setaf 3 ;;
+        blue   ) tput setaf 4 ;;
+        pink   ) tput setaf 5 ;;
+        cyan   ) tput setaf 6 ;;
+        grey   ) tput setaf 7 ;;
+    esac
+
+    echo -en "${text}"
+    tput sgr0
+}
+
+echo $(color yellow "------------------------------------")
+echo $(color yellow "Compiling LESS files")
+eval $LESS_COMPILER --compress $MAIN_LESS > $MAIN_CSS && echo $(color green "Done.") || echo $(color red "An error occured.")
+echo $(color yellow "------------------------------------")
+
+
+echo $(color yellow "------------------------------------")
+echo $(color yellow "Compiling JS files")
+eval $REQUIREJS_COMPILER -o $REQUIREJS_BUILD_FILE && echo $(color green "Done.") || echo $(color red "An error occured.")
+echo $(color yellow "------------------------------------")

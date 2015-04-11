@@ -1,0 +1,41 @@
+#!/bin/bash
+#Install all the dependencies: npm, Bower
+
+cd $(dirname $0)/..
+
+#-------------------------------------
+# HELPERS
+#-------------------------------------
+#COLOR:
+#How to use: echo $(color red "Some error in red")
+function color {
+    local color=${1}
+    shift
+    local text="${@}"
+
+    case ${color} in
+        red    ) tput setaf 1 ;;
+        green  ) tput setaf 2 ;;
+        yellow ) tput setaf 3 ;;
+        blue   ) tput setaf 4 ;;
+        pink   ) tput setaf 5 ;;
+        cyan   ) tput setaf 6 ;;
+        grey   ) tput setaf 7 ;;
+    esac
+
+    echo -en "${text}"
+    tput sgr0
+}
+
+
+echo "$(color yellow "------------------------------------")"
+cmd="npm install"
+echo $(color yellow "Installing npm dependencies:") $(color cyan "$cmd")
+eval $cmd
+echo "$(color yellow "------------------------------------")"
+
+echo "$(color yellow "------------------------------------")"
+cmd="./node_modules/.bin/bower install"
+echo $(color yellow "Installing Bower dependencies:") $(color cyan "$cmd")
+eval $cmd
+echo "$(color yellow "------------------------------------")"
