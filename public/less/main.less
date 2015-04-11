@@ -59,7 +59,7 @@ hr {
         }
         
         label {
-            margin-right:11px;
+            margin-right: 11px;
         }
         
         input {
@@ -69,5 +69,62 @@ hr {
 }
 
 .game {
+    width: 100%;
+    height: 100%;
+    
+    .desktop {
+        width: 100%;
+        height: 100%;
+        
+        .radio {
+            position: relative;
+            width: 25%;
+            height: 25%;
+            
+            .messages {
+                width: 100%;
+                height: 90%;
+                overflow-y: scroll;
+            }
+            input {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 10%;
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+            }
+        }
+    }
+    .loading {
+        width: 80%;
+        height: 20%;
+        margin: auto;
+        position: relative;
 
+        .start {
+        	width: 60px;
+            height: 60px;
+            position: absolute;
+            left: -60px;
+            background-color: black;
+            border-radius: 50%;
+        }
+        .end {
+        	width: 60px;
+            height: 60px;
+            position: absolute;
+            right: -60px;
+            background-color: black;
+            border-radius: 50%;
+        }
+        .ship {
+        	width: 60px;
+            height: 60px;
+            background-color: #666;
+        	position: absolute;
+            left: 0%;
+        }
+    }
 }
