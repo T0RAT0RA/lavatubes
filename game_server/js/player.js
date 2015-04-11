@@ -10,7 +10,7 @@ module.exports = Player = Entity.extend({
         this.socket = config.socket;
 
         this.id     = config.id || Date.now();
-        this.name   = this.getRandomName();
+        this.name   = config.name || this.getRandomName();
         this.oxygen = 100;
 
         this.game   = config.game;

@@ -91,7 +91,8 @@ GameServer = cls.Class.extend({
                     player = new Player({
                         id: ++self.playerCount,
                         socket: socket,
-                        game: game
+                        game: game,
+                        name: data.name
                     });
                     game.enter_callback(player);
                 } else {

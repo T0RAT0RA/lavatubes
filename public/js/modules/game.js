@@ -21,12 +21,19 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
 
             $(".register button, .register select").prop("disabled", false);
             $(".register .loader, .game .loader").remove();
+
+            if (name = localStorage.getItem('playername')) {
+                $('.player-name').val(name);
+            }
         },
 
         bindEvents: function () {
             var self = this;
 
             $(".register .new-game").on("click", function() {
+                //Save name in localstorage
+                var name = $('.player-name').val();
+                localStorage.setItem('playername', name);
                 socket.emit(Types.Messages.NEWGAME);
             });
 
@@ -38,7 +45,8 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
             var matches = window.location.pathname.match(/game\/([^\/]*)\/?$/);
             if (matches && matches[1]){
                 var gameId = matches[1];
-                socket.emit(Types.Messages.ENTERGAME, {game: gameId});
+                localStorage.getItem('playername');
+                socket.emit(Types.Messages.ENTERGAME, {game: gameId, name: name});
             }
 
             //Handle radio communication
