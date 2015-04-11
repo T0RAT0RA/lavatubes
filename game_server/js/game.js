@@ -109,15 +109,14 @@ module.exports = Game = cls.Class.extend({
 
         //State loop
         setInterval(function() {
-            self.broadcast(Types.Messages.GAMEINFO, self.getState());
+            self.broadcast(Types.Messages.GAMESTATE, self.getState());
         }, 1000 / this.ups);
 
         //Update days
-
         setInterval(function() {
             self.updateRandomEvents();
             self.updatePlayers();
-            self.broadcast(Types.Messages.GAMEINFO, self.getState());
+            self.broadcast(Types.Messages.GAMESTATE, self.getState());
         }, 1000 * this.secondsPerDay);
 
         log.info(""+this.id+" running...");
