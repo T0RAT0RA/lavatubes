@@ -36,6 +36,9 @@ module.exports = Player = Entity.extend({
                     self.exit_callback();
                 }
             }
+            else if (Types.Messages.RADIO == action) {
+                self.game.broadcast(Types.Messages.RADIO, {id: self.id, name: self.name, message: data});
+            }
         });
     },
 
