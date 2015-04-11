@@ -16,7 +16,9 @@
                     <input type="text" placeholder=">" class="message"/>
                 </div>
             </div>
-            <pre class="game-info"></pre>
+            {{^isProd}}
+                <pre class="game-info"></pre>
+            {{/isProd}}
         </div>
         
         <div class="loading">
