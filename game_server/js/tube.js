@@ -20,7 +20,7 @@ module.exports = Tube = Entity.extend({
         this.player = player;
     },
 
-    getCleanEntity: function(player) {
+    getCleanEntity: function() {
         var json = _.omit(this, 'game', 'player');
         if (this.player) {
             json.player = this.player.id

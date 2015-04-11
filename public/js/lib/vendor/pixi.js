@@ -1,0 +1,1 @@
+../../../bower_components/pixi/bin/pixi.js
