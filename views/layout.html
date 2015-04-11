@@ -2,7 +2,6 @@
 <html>
     <head>
         <title>lavatubes</title>
-        <link rel="stylesheet/less" type="text/css" href="/css/style.less" />
 
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
     </head>
@@ -11,7 +10,23 @@
 
         <script src="/shared/js/gametypes.js"></script>
         <script src="/js/lib/class.js"></script>
-        <script data-main="/js/start" src="/js/lib/require.js"></script>
+
+        {{!
+            FOR PRODUCTION:
+            <link href="/css/main.css" rel="stylesheet" type="text/css" />
+            <script type="text/javascript" src="/js/dist/app.js"></script>
+        }}
+
+        <link rel="stylesheet/less" type="text/css" href="/less/main.less" />
+        <script type="text/javascript">var less = less || {}; less.env='development';</script>
+        <script src="/js/lib/vendor/less.min.js"></script>
+
+        <script type="text/javascript" src="/js/lib/vendor/require.js"></script>
+        <script type="text/javascript" src="/js/config.js"></script>
+        <script type="text/javascript">
+            require(['app']);
+        </script>
+
         {{{yield-scripts}}}
     </body>
 </html>
