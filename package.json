@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start"         : "node ./bin/www",
-    "postinstall"   : "./node_modules/.bin/bower install"
+    "start": "node ./bin/www",
+    "postinstall": "./node_modules/.bin/bower install"
   },
   "dependencies": {
     "body-parser": "~1.0.0",
@@ -19,6 +19,7 @@
     "less-plugin-clean-css": "^1.5.0",
     "log": "*",
     "morgan": "~1.0.0",
+    "pixi": "^0.2.1",
     "requirejs": "^2.1.15",
     "socket.io": "~0.9.6",
     "socket.io-wildcard": "*",

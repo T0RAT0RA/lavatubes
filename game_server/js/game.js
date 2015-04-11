@@ -4,6 +4,7 @@ var cls     = require("./lib/class"),
     fs      = require('fs'),
     Player  = require('./player'),
     Tube    = require('./tube'),
+    Maps    = require("../../shared/js/maps"),
     Types   = require("../../shared/js/gametypes");
 
 // ======= GAME SERVER ========
@@ -17,7 +18,7 @@ module.exports = Game = cls.Class.extend({
         this.maxTubes = maxTubes;
         this.server = server;
         this.ups = 1;
-
+        this.maps = Maps;
         this.entities   = {};
         this.tubes      = {};
         this.players    = {};
@@ -60,7 +61,8 @@ module.exports = Game = cls.Class.extend({
             });
 
             player.hasEnteredGame = true;
-            self.broadcast(Types.Messages.MESSAGE, "Player " + player.name + " has joined the game.");
+            self.broadcast(Types.Messages.MESSAGE, "Player " + player.name + " has joined the game.");  
+            self.broadcast(Types.Messages.MAP, this.maps);
 
             if(self.added_callback) {
                 self.added_callback();

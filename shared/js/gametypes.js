@@ -6,7 +6,8 @@ Types = {
         GAMEINFO: 3,
         GAMESINFO: 4,
         ENTERGAME: 5,
-        RADIO: 6
+        RADIO: 6,
+        MAP: 7
     },
 
     Entities: {
