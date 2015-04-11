@@ -4,6 +4,8 @@ var cls     = require("./lib/class"),
     fs      = require('fs'),
     Player  = require('./player'),
     Tube    = require('./tube'),
+    moment  = require('moment'),
+    RandomEvent = require('./randomEvent'),
     Types   = require("../../shared/js/gametypes");
 
 // ======= GAME SERVER ========
@@ -14,13 +16,15 @@ module.exports = Game = cls.Class.extend({
         console.log("Create new game #" + id);
 
         this.id = id;
-        this.maxTubes = maxTubes;
-        this.server = server;
-        this.ups = 1;
+        this.maxTubes   = maxTubes;
+        this.server     = server;
+        this.startTime  = Date.now();
+        this.ups        = 1;
 
         this.entities   = {};
         this.tubes      = {};
         this.players    = {};
+        this.randomEvents = {};
 
         this.initTubes();
 
@@ -101,12 +105,7 @@ module.exports = Game = cls.Class.extend({
         var self = this;
 
         setInterval(function() {
-            //log.debug(self.id + " running... ");
-            //log.debug("entities: ", _.pluck(self.entities, 'name'));
-            //log.debug("players: ", _.pluck(self.players, 'name'));
-            //log.debug("npcs: ", _.pluck(self.npcs, 'name'));
-            self.updatePositions();
-            self.updateActions();
+            self.updateRandomEvents();
             self.broadcast(Types.Messages.GAMEINFO, self.getState());
         }, 1000 / this.ups);
 
@@ -118,9 +117,33 @@ module.exports = Game = cls.Class.extend({
         });
     },
 
-    updatePositions: function() {
-        _.each(this.entities, function(entity) {
+    updateRandomEvents: function() {
+        var self = this;
+
+        _.each(this.randomEvents, function(randomEvent) {
+            if (randomEvent.startAt.isAfter(moment())) {
+                return;
+            }
+            randomEvent.update();
+            if (randomEvent.endAt.isBefore(moment())) {
+                randomEvent.ends(function(){
+                    self.removeRandomEvent(randomEvent);
+                });
+            }
         });
+
+        //Create random events
+        if (!_.size(this.randomEvents)) {
+            console.log('Create random event')
+            var startAt = moment().add(_.random(10, 60), 's');
+            var endAt   = moment(startAt).add(_.random(20, 60), 's');
+            var randomEvent = new RandomEvent({
+                type    : 'dustStorm',
+                startAt : startAt,
+                endAt   : endAt
+            })
+            this.addRandomEvent(randomEvent);
+        }
     },
 
     addEntity: function(entity) {
@@ -147,6 +170,16 @@ module.exports = Game = cls.Class.extend({
         delete this.players[player.id];
 
         this.tryToRemoveGame();
+    },
+
+    addRandomEvent: function(randomEvent) {
+        this.addEntity(randomEvent);
+        this.randomEvents[randomEvent.id] = randomEvent;
+    },
+
+    removeRandomEvent: function(randomEvent) {
+        this.removeEntity(randomEvent);
+        delete this.randomEvents[randomEvent.id];
     },
 
     addTube: function(tube) {
@@ -191,8 +224,9 @@ module.exports = Game = cls.Class.extend({
 
     getState: function() {
         var self = this,
-            filtered_players    = _.map(this.players, function(player){ return self.getCleanEntity(player); });
-            filtered_tubes      = _.map(this.tubes, function(tube){ return tube.getCleanEntity(); });
+            filtered_players     = _.map(this.players, function(player){ return self.getCleanEntity(player); });
+            filtered_tubes       = _.map(this.tubes, function(tube){ return tube.getCleanEntity(); });
+            filtered_randomEvent = _.map(this.randomEvents, function(randomEvent){ return randomEvent.getCleanEntity(); });
 
         return {
             id: self.id,
@@ -200,6 +234,7 @@ module.exports = Game = cls.Class.extend({
             time: new Date().toLocaleTimeString(),
             players_count: Object.keys(filtered_players).length,
             max_tubes: self.maxTubes,
+            randomEvents: filtered_randomEvent,
             tubes: filtered_tubes
         }
     }
