@@ -1,46 +1,73 @@
 html, body {
     margin: 0;
+    width: 100%;
+    height: 100%;
 }
 
+hr {
+    margin: 20px 0;
+}
 
-.register {
-    margin: 10px;
+.register, .home {
+    margin: auto;
+    position: absolute;
+    top: 35%;
+    left: 30%;
+    width: 40%;
+    height: auto;
+    padding: 30px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    
+    button {
+        display: block;
+        width: 50%;
+        margin: auto;
+        font-size: 1.2em;
+        margin-bottom:10px;
+    }
+    
+    select {
+        display: block;
+        width: 50%;
+        margin: auto;
+        font-size: 1.2em;
+    }
+    
+    p {
+        margin: 0 0 10px 0;
+        text-align: center;
+        font-size: 1.2em;
+    }
+    
+    a {
+        display: block;
+        text-align: center;
+        width: 50%;
+        margin: 10px auto;
+        padding: 10px 0;
+        font-size: 1.2em;
+    }
+    
+    .field {
+        width: 50%;
+        margin: 0 auto 30px auto;
+        
+        label, input {
+            font-size: 1.2em;
+        }
+        
+        label {
+            margin-right:11px;
+        }
+        
+        input {
+            width: 76%;
+        }
+    }
 }
 
 .game {
-    .actions {
-        height: 320px;
-    }
-    .action {
-        float: left;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        background-color: #666;
 
-        &.active{
-            background-color: #060;
-        }
-
-        /* TAP */
-        &[data-id="1"] {
-            width: 50%;
-            height: 100%;
-        }
-
-        /* FIRE */
-        &[data-id="2"] {
-            width: 50%;
-            height: 50%;
-        }
-
-        /* JUMP */
-        &[data-id="3"] {
-            width: 50%;
-            height: 50%;
-        }
-    }
 }
