@@ -11,12 +11,17 @@ module.exports = Player = Entity.extend({
 
         this.id     = config.id || Date.now();
         this.name   = this.getRandomName();
+        this.oxygen = 100;
 
         this.game   = config.game;
+        this.tube   = null;
         this.hasEnteredGame = false;
         this.isReady = false;
 
         this.socket.on("disconnect", function() {
+            if (self.tube) {
+                self.tube.assignPlayer(null);
+            }
             if(self.exit_callback) {
                 self.exit_callback();
             }
@@ -36,6 +41,10 @@ module.exports = Player = Entity.extend({
 
     onExit: function(callback) {
         this.exit_callback = callback;
+    },
+
+    assignTube: function(tube) {
+        this.tube = tube;
     },
 
     hasAction: function(id) {

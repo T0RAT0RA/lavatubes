@@ -3,25 +3,26 @@ var cls     = require("./lib/class"),
     Log     = require('log'),
     fs      = require('fs'),
     Player  = require('./player'),
+    Tube    = require('./tube'),
     Types   = require("../../shared/js/gametypes");
 
 // ======= GAME SERVER ========
 module.exports = Game = cls.Class.extend({
-    init: function(id, maxPlayers, server) {
+    init: function(id, maxTubes, server) {
         var self = this;
 
         console.log("Create new game #" + id);
 
         this.id = id;
-        this.maxPlayers = maxPlayers;
+        this.maxTubes = maxTubes;
         this.server = server;
         this.ups = 1;
 
-        this.allowDiagonals = false;
-        this.state      = Types.States.WAITING;
         this.entities   = {};
-        this.npcs       = {};
+        this.tubes      = {};
         this.players    = {};
+
+        this.initTubes();
 
         this.playerCount = 0;
 
@@ -38,6 +39,15 @@ module.exports = Game = cls.Class.extend({
                     self.removed_callback();
                 }
             });
+
+            var tube = this.getRandomEmptyTube();
+            //No more tube...
+            if (!tube){
+                 player.send(Types.Messages.ENTERGAME, {success: false, error: 'No more tube available'});
+                 return;
+            }
+            tube.assignPlayer(player);
+            player.assignTube(tube);
 
             self.addPlayer(player);
 
@@ -61,6 +71,12 @@ module.exports = Game = cls.Class.extend({
         log.info(""+this.id+" created (capacity: "+this.maxPlayers+" players).");
     },
 
+    initTubes: function() {
+        for (var i = 0; i < this.maxTubes; i++){
+            var tube = new Tube({game: this, id: _.size(this.tubes) + 1});
+            this.addTube(tube);
+        }
+    },
     onPlayerConnect: function(callback) {
         this.connect_callback = callback;
     },
@@ -133,6 +149,18 @@ module.exports = Game = cls.Class.extend({
         this.tryToRemoveGame();
     },
 
+    addTube: function(tube) {
+        this.addEntity(tube);
+        this.tubes[tube.id] = tube;
+    },
+
+    getRandomEmptyTube: function() {
+        //Get all tubes and reject the ones with players
+        var emptyTubes = _.reject(this.tubes, function(tube){ return tube.player? true : false; }),
+            randomTube = _.sample(emptyTubes);
+        return randomTube;
+    },
+
     getEntitiesByType: function() {
         return _.groupBy(this.entities, function(entity) {
           return entity.type;
@@ -158,20 +186,21 @@ module.exports = Game = cls.Class.extend({
     },
 
     getCleanEntity: function(entity) {
-        return _.omit(entity, 'game', 'socket', 'player', 'actionsAvailable');
+        return _.omit(entity, 'game', 'socket', 'player', 'tube', 'actionsAvailable');
     },
 
     getState: function() {
         var self = this,
-            filtered_players = _.map(this.players, function(player){ return self.getCleanEntity(player); });
+            filtered_players    = _.map(this.players, function(player){ return self.getCleanEntity(player); });
+            filtered_tubes      = _.map(this.tubes, function(tube){ return tube.getCleanEntity(); });
 
         return {
             id: self.id,
             state: self.state,
             time: new Date().toLocaleTimeString(),
             players_count: Object.keys(filtered_players).length,
-            max_players: self.maxPlayers,
-            players: filtered_players,
+            max_tubes: self.maxTubes,
+            tubes: filtered_tubes
         }
     }
 });
