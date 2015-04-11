@@ -33,9 +33,3 @@ cmd="npm install"
 echo $(color yellow "Installing npm dependencies:") $(color cyan "$cmd")
 eval $cmd
 echo "$(color yellow "------------------------------------")"
-
-echo "$(color yellow "------------------------------------")"
-cmd="./node_modules/.bin/bower install"
-echo $(color yellow "Installing Bower dependencies:") $(color cyan "$cmd")
-eval $cmd
-echo "$(color yellow "------------------------------------")"
