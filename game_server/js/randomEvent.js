@@ -17,7 +17,6 @@ module.exports = RandomEvent = Entity.extend({
     },
 
     update: function(){
-        console.log('Event update', this.id);
     },
 
     ends: function(callback){

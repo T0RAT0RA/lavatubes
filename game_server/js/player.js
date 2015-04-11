@@ -1,6 +1,7 @@
 var cls     = require("./lib/class"),
     _       = require("underscore"),
     Entity  = require('./entity'),
+    moment  = require('moment'),
     Types   = require("../../shared/js/gametypes");
 
 module.exports = Player = Entity.extend({
@@ -46,6 +47,11 @@ module.exports = Player = Entity.extend({
         this.exit_callback = callback;
     },
 
+
+    update: function() {
+        this.oxygen--;
+    },
+
     assignTube: function(tube) {
         this.tube = tube;
     },
@@ -64,5 +70,11 @@ module.exports = Player = Entity.extend({
 
     send: function(name, message) {
         this.socket.emit(name, message);
+    },
+
+    getCleanEntity: function() {
+        var json = _.omit(this, 'socket', 'game', 'tube');
+        
+        return json;
     }
 });
