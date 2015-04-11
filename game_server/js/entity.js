@@ -17,8 +17,7 @@ module.exports = Entity = Class.extend({
 
     getState: function() {
         return {
-            id: this.id,
-            position: this.position
+            id: this.id
         };
     }
 

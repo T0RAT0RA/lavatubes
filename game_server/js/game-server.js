@@ -58,15 +58,15 @@ GameServer = cls.Class.extend({
 
             //Create a new run server
             socket.on(Types.Messages.NEWGAME, function() {
-                var maxPlayers = 4;
-                game = new Game(_.uniqueId("game"), maxPlayers, self);
+                var maxTubes = 4;
+                game = new Game(_.uniqueId("game"), maxTubes, self);
                 game.run();
                 self.games[game.id] = game;
                 socket.emit(Types.Messages.NEWGAME, {success: true, game: game.id});
                 self.sendGamesInfo();
             });
 
-            //Connect player/controller to a game
+            //Connect player to a game
             socket.on(Types.Messages.ENTERGAME, function(data) {
                 var success = true,
                     error = "",
@@ -114,7 +114,7 @@ GameServer = cls.Class.extend({
             gamesInfo[id] = {
                 id: id,
                 players: _.keys(game.players).length,
-                maxPlayers: game.maxPlayers
+                maxPlayers: game.maxTubes
             };
         }
         return gamesInfo;

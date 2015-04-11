@@ -6,21 +6,7 @@ Types = {
         GAMEINFO: 3,
         GAMESINFO: 4,
         ENTERGAME: 5,
-        SYNC: 6,
-        ACTION: 7
-        /*
-        INIT: 0,
-        DISCONNECT: 1,
-        STATE: 2,
-        MOVE: 3,
-        MESSAGE: 4,
-        CHAT: 5,
-        SPAWN: 6,
-        DESPAWN: 7,
-        ACTION: 8,
-        ENTERGAME: 10,
-        GAMESINFO: 11
-        */
+        RADIO: 6
     },
 
     Entities: {

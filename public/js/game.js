@@ -12,6 +12,7 @@ define(["io"], function (io) {
             socket.on(Types.Messages.GAMEINFO, this.updateGameInfo.bind(this));
             socket.on(Types.Messages.NEWGAME, this.newGame.bind(this));
             socket.on(Types.Messages.ENTERGAME, this.enterGame.bind(this));
+            socket.on(Types.Messages.RADIO, this.onRadioMessage.bind(this));
             socket.on("disconnect", this.onGameDisconnect.bind(this));
 
             this.bindEvents();
@@ -37,6 +38,17 @@ define(["io"], function (io) {
                 var gameId = matches[1];
                 socket.emit(Types.Messages.ENTERGAME, {game: gameId});
             }
+
+            //Handle radio communication
+             $('body').on('keydown', '.radio input', function(e) {
+                if(e.keyCode == 13) {
+                    var input = $(this);
+                    if (input.val()) {
+                        socket.emit(Types.Messages.RADIO, input.val());
+                    }
+                    input.val('');
+                }
+            });
         },
 
         newGame: function (data) {
@@ -72,6 +84,10 @@ define(["io"], function (io) {
             }
         },
 
+        onRadioMessage: function (data) {
+            this.logMessages(data.name + ": " + data.message);
+        },
+
         updateGameInfo: function (data) {
             $(".player-count").html(data.players_count);
             $(".game-info").html(JSON.stringify(data, null, 2));
@@ -82,6 +98,10 @@ define(["io"], function (io) {
                 window.location.reload();
             }, 1000);
 
+        },
+
+        logMessages: function(message) {
+            $("<div>").html(message).hide().appendTo('.radio .messages').fadeIn();
         }
     });
 
