@@ -11,21 +11,21 @@
         <script src="/shared/js/gametypes.js"></script>
         <script src="/js/lib/class.js"></script>
 
-        {{!
-            FOR PRODUCTION:
+        {{#isProd}}
             <link href="/css/main.css" rel="stylesheet" type="text/css" />
-            <script type="text/javascript" src="/js/dist/app.js"></script>
-        }}
+            <script type="text/javascript" src="/js/built/app.js"></script>
+        {{/isProd}}
+        {{^isProd}}
+            <link rel="stylesheet/less" type="text/css" href="/less/main.less" />
+            <script type="text/javascript">var less = less || {}; less.env='development';</script>
+            <script src="/js/lib/vendor/less.min.js"></script>
 
-        <link rel="stylesheet/less" type="text/css" href="/less/main.less" />
-        <script type="text/javascript">var less = less || {}; less.env='development';</script>
-        <script src="/js/lib/vendor/less.min.js"></script>
-
-        <script type="text/javascript" src="/js/lib/vendor/require.js"></script>
-        <script type="text/javascript" src="/js/config.js"></script>
-        <script type="text/javascript">
-            require(['app']);
-        </script>
+            <script type="text/javascript" src="/js/lib/vendor/require.js"></script>
+            <script type="text/javascript" src="/js/config.js"></script>
+            <script type="text/javascript">
+                require(['app']);
+            </script>
+        {{/isProd}}
 
         {{{yield-scripts}}}
     </body>

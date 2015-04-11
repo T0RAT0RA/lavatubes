@@ -21,6 +21,9 @@ app.set('view engine', 'html');
 app.set('layout', 'layout')
 app.engine('html', require('hogan-express'))
 
+//Global variables
+app.locals.isProd = (process.env.NODE_ENV == 'prod');
+
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
