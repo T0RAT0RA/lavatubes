@@ -20,12 +20,12 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
 
             this.bindEvents();
 
-            $(".register button, .register select").prop("disabled", false);
-            $(".loader, .game .loader").remove();
-
+            $(".register button, .register select, .player-name").prop("disabled", false);
             if (name = localStorage.getItem('playername')) {
                 $('.player-name').val(name);
             }
+            $(".loader, .game .loader").remove();
+
         },
 
         bindEvents: function () {
