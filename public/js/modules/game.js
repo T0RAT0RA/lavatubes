@@ -86,6 +86,7 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
                 $(".game .tube-map").hide();
                 $(".game .mars-map").show();
             });
+            $(".item").draggable({ revert: true, helper: 'clone'});
         },
 
         newGame: function (data) {
