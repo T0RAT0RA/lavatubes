@@ -11,14 +11,9 @@ router.get('/play', function(req, res) {
     res.render('games/register');
 });
 
-/* GET current game page. */
-router.get('/current-game', function(req, res) {
-    res.render('ongoing.html');
-});
-
 /* GET genaral informations page. */
-router.get('/general-informations', function(req, res) {
-    res.render('info.html');
+router.get('/about', function(req, res) {
+    res.render('about.html');
 });
 
 module.exports = router;
