@@ -53,7 +53,7 @@ define(["lib/vendor/pixi"], function (PIXI) {
             }
 
             this.renderStage();
-            $(".game").prepend(this.renderer.view);
+            $(".tube-map").prepend(this.renderer.view);
         },
 
         drawImages: function(images) {

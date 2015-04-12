@@ -73,6 +73,16 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
                     input.val('');
                 }
             });
+
+
+            $(".game .mars-map").on('click', '.my-tube', function(){
+                $(".game .tube-map").show();
+                $(".game .mars-map").hide();
+            });
+            $(".game .tube-map").on('click', '.to-mars', function(){
+                $(".game .tube-map").hide();
+                $(".game .mars-map").show();
+            });
         },
 
         newGame: function (data) {
@@ -94,7 +104,7 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
             $(".game .game-id").html(data.game.id);
             $(".player-count").html(data.game.players_count);
 
-            $(".game, .game .desktop").show();
+            $(".game .mars-map").show();
         },
 
         updateGamesInfo: function (data) {
