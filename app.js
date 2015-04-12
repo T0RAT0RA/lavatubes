@@ -39,11 +39,9 @@ app.get('/test', function(req, res){
   res.send(Object.keys(gameServer.games));
 });
 
-/// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+// Handle 404
+app.use(function(req, res) {
+ res.render('404');
 });
 
 /// error handlers
