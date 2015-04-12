@@ -8,7 +8,6 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
             this.socket   = socket;
             this.render   = new GameRenderer(this);
             console.log("App - init");
-
             socket.on(Types.Messages.GAMESINFO, this.updateGamesInfo.bind(this));
             socket.on(Types.Messages.GAMESTATE, this.updateGameState.bind(this));
             socket.on(Types.Messages.NEWGAME, this.newGame.bind(this));
@@ -17,14 +16,15 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
             socket.on(Types.Messages.RADIO, this.onRadioMessage.bind(this));
             socket.on(Types.Messages.MAP, this.render.initMap.bind(this.render));
             socket.on("disconnect", this.onGameDisconnect.bind(this));
-
+            
+            this.startLoader();
             this.bindEvents();
 
             $(".register button, .register select, .player-name").prop("disabled", false);
             if (name = localStorage.getItem('playername')) {
                 $('.player-name').val(name);
             }
-            $(".loader, .game .loader").remove();
+            
 
         },
 
@@ -93,6 +93,7 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
         },
 
         enterGame: function (data) {
+            var self = this;
             if (!data.success) {
                 console.log(data.error);
                 window.location.hash = "";
@@ -105,7 +106,9 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
             $(".game .game-id").html(data.game.id);
             $(".player-count").html(data.game.players_count);
 
-            $(".game .mars-map").show();
+            setTimeout(function() {
+                self.displayMap();
+            }, 3000);
         },
 
         updateGamesInfo: function (data) {
@@ -141,11 +144,19 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
             setTimeout(function() {
                 window.location.reload();
             }, 1000);
-
         },
 
         logMessages: function(message) {
             $("<div>").html(message).hide().appendTo('.radio .messages').fadeIn();
+        },
+
+        startLoader: function(argument) {
+            $( ".ship" ).animate({ "left": "+=100%" }, 2900 );
+        },
+        displayMap: function(){
+            $(".loading").fadeOut(function(){
+                $('.game .mars-map').show();
+            });
         }
     });
 
