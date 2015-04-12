@@ -180,7 +180,8 @@ module.exports = Game = cls.Class.extend({
         this.removeEntity(player);
         delete this.players[player.id];
 
-        this.tryToRemoveGame();
+        //We remove the game if no player in 1 minute
+        setTimeout(this.tryToRemoveGame.bind(this), 60 * 1000);
     },
 
     addRandomEvent: function(randomEvent) {
