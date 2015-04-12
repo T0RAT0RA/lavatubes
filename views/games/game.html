@@ -2,6 +2,7 @@
     <div class="game">
         <div class="tube-map">
             <div class="right-sidebar">
+                <button class="to-mars">TO MARS</button><br/>
                 Game {{game_id}} | <span class="player-count"></span> Player(s)
                 <br/>
                 <div class="playername">Astronaut: <span></span></div>
@@ -12,8 +13,12 @@
                     <div class="messages"></div>
                     <input type="text" placeholder=">" class="message"/>
                 </div>
-                
-                <button class="to-mars">TO MARS</button>
+                <div class="items">
+                    <div class="item item-rover1"></div>
+                    <div class="item item-rover2"></div>
+                    <div class="item item-satellite"></div>
+                    <div class="item item-antenna"></div>
+                </div>
             </div>
             {{^isProd}}
                 <pre class="game-info"></pre>
