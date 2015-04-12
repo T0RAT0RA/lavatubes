@@ -4,11 +4,11 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
 
     var App = Class.extend({
         init: function() {
+            var self = this;
             this.log_div  = ".game-state .messages";
             this.socket   = socket;
             this.render   = new GameRenderer(this);
             console.log("App - init");
-
             socket.on(Types.Messages.GAMESINFO, this.updateGamesInfo.bind(this));
             socket.on(Types.Messages.GAMESTATE, this.updateGameState.bind(this));
             socket.on(Types.Messages.NEWGAME, this.newGame.bind(this));
@@ -17,15 +17,17 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
             socket.on(Types.Messages.RADIO, this.onRadioMessage.bind(this));
             socket.on(Types.Messages.MAP, this.render.initMap.bind(this.render));
             socket.on("disconnect", this.onGameDisconnect.bind(this));
-
+            
+            this.startLoader();
             this.bindEvents();
 
             $(".register button, .register select, .player-name").prop("disabled", false);
             if (name = localStorage.getItem('playername')) {
                 $('.player-name').val(name);
             }
-            $(".loader, .game .loader").remove();
-
+            setTimeout(function() {
+                self.displayMenu();
+            }, 1000);
         },
 
         bindEvents: function () {
@@ -93,6 +95,7 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
         },
 
         enterGame: function (data) {
+            var self = this;
             if (!data.success) {
                 console.log(data.error);
                 window.location.hash = "";
@@ -100,12 +103,20 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
             }
 
             console.log("App - enterGame");
+            console.log(data);
+
+            this.playerId   = data.player.id;
+            this.tubeId     = data.player.tube;
+            this.oxygenDiv  = $('.res-oxygen span');
+            $('.playername span').html(data.player.name);
 
             $(".register").remove();
             $(".game .game-id").html(data.game.id);
             $(".player-count").html(data.game.players_count);
 
-            $(".game .mars-map").show();
+            setTimeout(function() {
+                self.displayMap();
+            }, 3000);
         },
 
         updateGamesInfo: function (data) {
@@ -131,6 +142,19 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
         updateGameState: function (data) {
             $(".player-count").html(data.players_count);
             this.printGameState(data);
+
+            for (i in data.tubes){
+                if (data.tubes[i].id == this.tubeId) {
+                    var currentTube = data.tubes[i];
+                    this.oxygenDiv.html(currentTube.player.oxygen);
+                    this.oxygenDiv.removeClass('danger warning');
+                    if (currentTube.player.oxygen <= 10) {
+                        this.oxygenDiv.addClass('danger');
+                    } else if (currentTube.player.oxygen <= 50) {
+                        this.oxygenDiv.addClass('warning');
+                    }
+                }
+            }this.oxygenDiv
         },
 
         printGameState: function(data) {
@@ -141,11 +165,24 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
             setTimeout(function() {
                 window.location.reload();
             }, 1000);
-
         },
 
         logMessages: function(message) {
             $("<div>").html(message).hide().appendTo('.radio .messages').fadeIn();
+        },
+
+        startLoader: function(argument) {
+            $( ".ship" ).animate({ "left": "+=100%" }, 2900 );
+        },
+        displayMap: function(){
+            $(".loading").fadeOut(function(){
+                $('.game .mars-map').show();
+            });
+        },
+        displayMenu: function(){
+            $(".loader").fadeOut(function(){
+                $('.register .menu ').fadeIn();
+            });
         }
     });
 

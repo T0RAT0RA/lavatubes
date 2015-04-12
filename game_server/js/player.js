@@ -13,6 +13,7 @@ module.exports = Player = Entity.extend({
         this.id     = config.id || Date.now();
         this.name   = config.name || this.getRandomName();
         this.oxygen = 100;
+        this.isDead = false;
 
         this.game   = config.game;
         this.tube   = null;
@@ -50,6 +51,10 @@ module.exports = Player = Entity.extend({
 
     update: function() {
         this.oxygen--;
+        if (this.oxygen < 0) {
+            this.oxygen = 0
+            this.isDead = true;
+        }
     },
 
     assignTube: function(tube) {
@@ -65,7 +70,19 @@ module.exports = Player = Entity.extend({
     },
 
     getRandomName: function() {
-        return "John Doe";
+        return _.shuffle([
+            "Jeffrey Ashby",
+            "Michael Baker",
+            "Ivan Bella",
+            "Jay C. Buckey",
+            "Maurizio Cheli",
+            "Jean-François Clervoy",
+            "James Dutton",
+            "Edward Gibson",
+            "James Halsell",
+            "Vladimir Komarov",
+            "Andreas Mogensen"
+        ])[0];
     },
 
     send: function(name, message) {
@@ -74,6 +91,7 @@ module.exports = Player = Entity.extend({
 
     getCleanEntity: function() {
         var json = _.omit(this, 'socket', 'game', 'tube');
+        json.tube = this.tube? this.tube.id : null;
         
         return json;
     }

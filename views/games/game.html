@@ -1,21 +1,19 @@
 {{#yield-content}}
     <div class="game">
         <div class="tube-map">
-            <button class="to-mars">TO MARS</button>
-            Game {{game_id}} | <span class="player-count"></span> Player(s)
-            <br/>
             <div class="right-sidebar">
+                Game {{game_id}} | <span class="player-count"></span> Player(s)
+                <br/>
+                <div class="playername">Astronaut: <span></span></div>
                 <div class="ressources">
-                    <div class="ressource res-oxygen">100%</div>
-                    <div class="ressource res-water">0/xxxxx lt</div>
-                    <div class="ressource res-food">10 portions</div>
-                    <div class="ressource res-energy">0/xxxxx volt</div>
-                    <div class="ressource res-matters">10000</div>
+                    <div class="ressource res-oxygen">Oxygen: <span>100</span> %</div>
                 </div>
                 <div class="radio">
                     <div class="messages"></div>
                     <input type="text" placeholder=">" class="message"/>
                 </div>
+                
+                <button class="to-mars">TO MARS</button>
             </div>
             {{^isProd}}
                 <pre class="game-info"></pre>
