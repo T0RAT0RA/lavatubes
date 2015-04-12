@@ -20,7 +20,7 @@ module.exports = Game = cls.Class.extend({
         this.maxTubes   = maxTubes;
         this.server     = server;
         this.ups        = 1;
-        this.secondsPerDay = 10;
+        this.secondsPerDay = 3;
         this.maps       = Maps;
         this.startTime  = Date.now();
         this.entities   = {};
@@ -60,7 +60,7 @@ module.exports = Game = cls.Class.extend({
             self.addPlayer(player);
 
             //Init player object on client side
-            player.send(Types.Messages.ENTERGAME, {success: true, player: self.getCleanEntity(player), game: self.getState()});
+            player.send(Types.Messages.ENTERGAME, {success: true, player: player.getCleanEntity(), game: self.getState()});
 
             //Send each existing entity to the player game
             _.each(self.entities, function(entity){
