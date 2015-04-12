@@ -180,7 +180,7 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
         },
         displayMenu: function(){
             $(".loader").fadeOut(function(){
-                $('.register .menu ').show();
+                $('.register .menu ').fadeIn();
             });
         }
     });
