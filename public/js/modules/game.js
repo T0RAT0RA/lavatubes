@@ -108,6 +108,7 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
             this.playerId   = data.player.id;
             this.tubeId     = data.player.tube;
             this.oxygenDiv  = $('.res-oxygen span');
+            $('.playername span').html(data.player.name);
 
             $(".register").remove();
             $(".game .game-id").html(data.game.id);

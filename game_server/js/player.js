@@ -70,7 +70,19 @@ module.exports = Player = Entity.extend({
     },
 
     getRandomName: function() {
-        return "John Doe";
+        return _.shuffle([
+            "Jeffrey Ashby",
+            "Michael Baker",
+            "Ivan Bella",
+            "Jay C. Buckey",
+            "Maurizio Cheli",
+            "Jean-François Clervoy",
+            "James Dutton",
+            "Edward Gibson",
+            "James Halsell",
+            "Vladimir Komarov",
+            "Andreas Mogensen"
+        ])[0];
     },
 
     send: function(name, message) {
