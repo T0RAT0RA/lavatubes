@@ -4,6 +4,7 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
 
     var App = Class.extend({
         init: function() {
+            var self = this;
             this.log_div  = ".game-state .messages";
             this.socket   = socket;
             this.render   = new GameRenderer(this);
@@ -24,8 +25,9 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
             if (name = localStorage.getItem('playername')) {
                 $('.player-name').val(name);
             }
-            
-
+            setTimeout(function() {
+                self.displayMenu();
+            }, 1000);
         },
 
         bindEvents: function () {
@@ -156,6 +158,11 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
         displayMap: function(){
             $(".loading").fadeOut(function(){
                 $('.game .mars-map').show();
+            });
+        },
+        displayMenu: function(){
+            $(".loader").fadeOut(function(){
+                $('.register .menu ').show();
             });
         }
     });
