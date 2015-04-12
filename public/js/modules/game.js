@@ -100,6 +100,11 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
             }
 
             console.log("App - enterGame");
+            console.log(data);
+
+            this.playerId   = data.player.id;
+            this.tubeId     = data.player.tube;
+            this.oxygenDiv  = $('.res-oxygen span');
 
             $(".register").remove();
             $(".game .game-id").html(data.game.id);
@@ -131,6 +136,19 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
         updateGameState: function (data) {
             $(".player-count").html(data.players_count);
             this.printGameState(data);
+
+            for (i in data.tubes){
+                if (data.tubes[i].id == this.tubeId) {
+                    var currentTube = data.tubes[i];
+                    this.oxygenDiv.html(currentTube.player.oxygen);
+                    this.oxygenDiv.removeClass('danger warning');
+                    if (currentTube.player.oxygen <= 10) {
+                        this.oxygenDiv.addClass('danger');
+                    } else if (currentTube.player.oxygen <= 50) {
+                        this.oxygenDiv.addClass('warning');
+                    }
+                }
+            }this.oxygenDiv
         },
 
         printGameState: function(data) {

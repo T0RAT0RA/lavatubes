@@ -13,6 +13,7 @@ module.exports = Player = Entity.extend({
         this.id     = config.id || Date.now();
         this.name   = config.name || this.getRandomName();
         this.oxygen = 100;
+        this.isDead = false;
 
         this.game   = config.game;
         this.tube   = null;
@@ -50,6 +51,10 @@ module.exports = Player = Entity.extend({
 
     update: function() {
         this.oxygen--;
+        if (this.oxygen < 0) {
+            this.oxygen = 0
+            this.isDead = true;
+        }
     },
 
     assignTube: function(tube) {
@@ -74,6 +79,7 @@ module.exports = Player = Entity.extend({
 
     getCleanEntity: function() {
         var json = _.omit(this, 'socket', 'game', 'tube');
+        json.tube = this.tube? this.tube.id : null;
         
         return json;
     }
