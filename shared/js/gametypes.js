@@ -3,7 +3,7 @@ Types = {
         INIT: 0,
         DISCONNECT: 1,
         NEWGAME: 2,
-        GAMEINFO: 3,
+        GAMESTATE: 3,
         GAMESINFO: 4,
         ENTERGAME: 5,
         RADIO: 6,

@@ -20,6 +20,7 @@ module.exports = Game = cls.Class.extend({
         this.maxTubes = maxTubes;
         this.server = server;
         this.ups = 1;
+        this.secondsPerDay = 10;
         this.maps = Maps;
         this.startTime  = Date.now();
         this.entities   = {};
@@ -106,16 +107,24 @@ module.exports = Game = cls.Class.extend({
     run: function() {
         var self = this;
 
+        //State loop
+        setInterval(function() {
+            self.broadcast(Types.Messages.GAMESTATE, self.getState());
+        }, 1000 / this.ups);
+
+        //Update days
         setInterval(function() {
             self.updateRandomEvents();
-            self.broadcast(Types.Messages.GAMEINFO, self.getState());
-        }, 1000 / this.ups);
+            self.updatePlayers();
+            self.broadcast(Types.Messages.GAMESTATE, self.getState());
+        }, 1000 * this.secondsPerDay);
 
         log.info(""+this.id+" running...");
     },
 
-    updateActions: function() {
-        _.each(this.entities, function(entity) {
+    updatePlayers: function() {
+        _.each(this.players, function(player) {
+            player.update();
         });
     },
 
@@ -226,7 +235,7 @@ module.exports = Game = cls.Class.extend({
 
     getState: function() {
         var self = this,
-            filtered_players     = _.map(this.players, function(player){ return self.getCleanEntity(player); });
+            filtered_players     = _.map(this.players, function(player){ return player.getCleanEntity(); });
             filtered_tubes       = _.map(this.tubes, function(tube){ return tube.getCleanEntity(); });
             filtered_randomEvent = _.map(this.randomEvents, function(randomEvent){ return randomEvent.getCleanEntity(); });
 

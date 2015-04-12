@@ -10,9 +10,10 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
             console.log("App - init");
 
             socket.on(Types.Messages.GAMESINFO, this.updateGamesInfo.bind(this));
-            socket.on(Types.Messages.GAMEINFO, this.updateGameInfo.bind(this));
+            socket.on(Types.Messages.GAMESTATE, this.updateGameState.bind(this));
             socket.on(Types.Messages.NEWGAME, this.newGame.bind(this));
             socket.on(Types.Messages.ENTERGAME, this.enterGame.bind(this));
+            socket.on(Types.Messages.INIT, this.initPlayer.bind(this));
             socket.on(Types.Messages.RADIO, this.onRadioMessage.bind(this));
             socket.on(Types.Messages.MAP, this.render.initMap.bind(this.render));
             socket.on("disconnect", this.onGameDisconnect.bind(this));
@@ -94,12 +95,20 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
             }
         },
 
+        initPlayer: function (player) {
+            this.player = player;
+        },
+
         onRadioMessage: function (data) {
             this.logMessages(data.name + ": " + data.message);
         },
 
-        updateGameInfo: function (data) {
+        updateGameState: function (data) {
             $(".player-count").html(data.players_count);
+            this.printGameState(data);
+        },
+
+        printGameState: function(data) {
             $(".game-info").html(JSON.stringify(data, null, 2));
         },
 
