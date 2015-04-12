@@ -1,6 +1,7 @@
 {{#yield-content}}
     <div class="game">
-        <div class="desktop">
+        <div class="tube-map">
+            <button class="to-mars">TO MARS</button>
             Game {{game_id}} | <span class="player-count"></span> Player(s)
             <br/>
             <div class="right-sidebar">
@@ -19,6 +20,11 @@
             {{^isProd}}
                 <pre class="game-info"></pre>
             {{/isProd}}
+        </div>
+
+        <div class="mars-map">
+            MARS MAP HERE
+            <button class="my-tube">MY TUBE</button>
         </div>
         
         <div class="loading">
