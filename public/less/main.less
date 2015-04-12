@@ -175,7 +175,9 @@ p {
             
             &:focus {
                 color: #FFF;
-                border-color: #FFF;
+            }
+            &.error {
+                border-color: #900;
             }
         }
     }
@@ -196,23 +198,6 @@ p {
 .game {
     width: 100%;
     height: 100%;
-    
-    .mars-map {
-        width: 100%;
-        height: 100%;
-        background: url(/img/satelitte/map.jpg) no-repeat;
-        background-size: cover;
-        
-        .logo {
-            background: url(/img/satelitte/logo.png) no-repeat;
-            width: 14%;
-            height: 100%;
-            background-size: cover;
-            position: absolute;
-            left: 4.9%;
-            text-indent: -999em;
-        }
-    }
     
     .item {
         position: absolute;
@@ -293,9 +278,7 @@ p {
         width: 80%;
         height: 100px;
         margin: auto;
-        position: absolute;
-        left: 10%;
-        top: calc(~'50% - 50px');
+        position: relative;
 
         .start {
         	width: 100px;

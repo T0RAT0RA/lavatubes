@@ -59,7 +59,7 @@ define(["lib/vendor/pixi"], function (PIXI) {
         drawImages: function(images) {
             for (i in images) {
                 image = images[i];
-                var sprite = PIXI.Sprite.fromImage("img/"+image.img);
+                var sprite = PIXI.Sprite.fromImage(image.img);
                 sprite.position.x = (image.offset)? image.offset.x : 0;
                 sprite.position.y = (image.offset)? image.offset.y : 0;
                 this.stage.addChild(sprite);
