@@ -25,12 +25,12 @@ app.engine('html', require('hogan-express'))
 app.locals.isProd = (process.env.NODE_ENV == 'prod');
 
 app.use(favicon());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
-app.use(require('less-middleware')(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes.index);
 app.use('/game', routes.games);
