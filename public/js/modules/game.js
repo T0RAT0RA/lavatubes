@@ -32,13 +32,26 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
             var self = this;
 
             $(".register .new-game").on("click", function() {
+                var name = $('.player-name');
+                name.removeClass('error');
+
+                if (!name.val()) {
+                    name.addClass('error');
+                    return false;
+                }
+
                 //Save name in localstorage
-                var name = $('.player-name').val();
-                localStorage.setItem('playername', name);
+                localStorage.setItem('playername', name.val());
                 socket.emit(Types.Messages.NEWGAME);
             });
 
             $(".register .game-list").on("change", function() {
+                var name = $('.player-name');
+                name.removeClass('error');
+                if (!name.val()) {
+                    name.addClass('error');
+                    return false;
+                }
                 if (!$(this).val()) { return; }
                 window.location = "/game/" + $(this).val();
             });
