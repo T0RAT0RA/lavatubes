@@ -1,12 +1,13 @@
 {{#yield-content}}
+    <div class="loader"><img src="/img/loader.GIF"></div>
     <div class="register">
-        <div class="field"><label for="player-name">Player:</label> <input type="text" name="player-name" class="player-name" /></div>
-        <button class="new-game" disabled>New game</button>
-        <hr />
-        <p>Join a game</p>
-        <select class="game-list" disabled>
-            <option>--</option>
-        </select>
-        <img class="loader" src="/img/loader.gif">
+        <div class="menu">
+            <div class="field"><label for="player-name">Player:</label> <input type="text" name="player-name" class="player-name" /></div>
+            <button class="new-game" disabled>New game</button>
+            <span>Join a game</span>
+            <select class="game-list" disabled>
+                <option>--</option>
+            </select>
+        </div>
     </div>
 {{/yield-content}}

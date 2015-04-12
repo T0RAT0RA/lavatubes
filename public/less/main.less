@@ -2,37 +2,70 @@ html, body {
     margin: 0;
     width: 100%;
     height: 100%;
+    background-color: #000;
 }
 
 hr {
     margin: 20px 0;
 }
 
-.register, .home {
-    margin: auto;
+.loader {
     position: absolute;
-    top: 35%;
-    left: 30%;
-    width: 40%;
-    height: auto;
-    padding: 30px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
+    z-index:999;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,0.7);
+        
+    img {
+        position: absolute;
+        top: calc(~'50% - 40px');
+        left: calc(~'50% - 40px');
+        border-radius: 50%;
+    }
+}
+
+.register, .home {
+    width: 100%;
+    height: 100%;
+    background: url(/img/mars_year_one_home.jpg) no-repeat center center #000;
     
-    button {
-        display: block;
-        width: 50%;
-        margin: auto;
-        font-size: 1.2em;
-        margin-bottom:10px;
+    .menu {
+        position: absolute;
+        bottom: 10%;
+        width: 100%;
+        text-align: center;
     }
     
-    select {
-        display: block;
-        width: 50%;
+    button {
+        font-family: "Arial";
+        font-size: 15px;
+        font-weight: bold;
+        color: #999;
+        text-transform: uppercase;
+        border: none;
+        background: transparent;
+        
+        &:hover {
+            color: #FFF;
+        }
+    }
+    
+    select, option {
         margin: auto;
-        font-size: 1.2em;
+        font-family: "Arial";
+        font-size: 15px;
+        font-weight: bold;
+        text-transform: uppercase;
+        border: 1px solid #999;
+        color: #999;
+        padding: 4px 7px;
+        background: transparent;
+        
+        &:focus {
+            color: #FFF;
+        }
     }
     
     p {
@@ -42,20 +75,38 @@ hr {
     }
     
     a {
-        display: block;
-        text-align: center;
-        width: 50%;
-        margin: 10px auto;
-        padding: 10px 0;
-        font-size: 1.2em;
+        margin: 0 20px;
+        font-family: "Arial";
+        font-size: 15px;
+        font-weight: bold;
+        color: #999;
+        text-decoration: none;
+        text-transform: uppercase;
+        
+        &:hover {
+            color: #FFF;
+        }
+    }
+    
+    span {
+        font-family: "Arial";
+        font-size: 15px;
+        font-weight: bold;
+        color: #999;
+        text-transform: uppercase;
+        margin: 0 10px 0 20px;
     }
     
     .field {
-        width: 50%;
+        width: 15%;
         margin: 0 auto 30px auto;
         
         label, input {
-            font-size: 1.2em;
+            font-family: "Arial";
+            font-size: 15px;
+            font-weight: bold;
+            color: #999;
+            text-transform: uppercase;
         }
         
         label {
@@ -63,7 +114,15 @@ hr {
         }
         
         input {
-            width: 76%;
+            width: 60%;
+            text-transform: none;
+            border: 1px solid #999;
+            padding: 4px 7px;
+            background-color: transparent;
+            
+            &:focus {
+                color: #FFF;
+            }
         }
     }
 }
