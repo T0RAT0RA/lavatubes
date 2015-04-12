@@ -14,19 +14,21 @@ module.exports = Game = cls.Class.extend({
     init: function(id, maxTubes, server) {
         var self = this;
 
-        console.log("Create new game #" + id);
 
-        this.id = id;
-        this.maxTubes = maxTubes;
-        this.server = server;
-        this.ups = 1;
+        this.name       = this.getRandomName();
+        this.id         = this.name.toLowerCase().replace(' ', '-') + '-' + id;
+        this.maxTubes   = maxTubes;
+        this.server     = server;
+        this.ups        = 1;
         this.secondsPerDay = 10;
-        this.maps = Maps;
+        this.maps       = Maps;
         this.startTime  = Date.now();
         this.entities   = {};
         this.tubes      = {};
         this.players    = {};
         this.randomEvents = {};
+
+        console.log("Create new game #" + this.id);
 
         this.initTubes();
 
@@ -249,5 +251,17 @@ module.exports = Game = cls.Class.extend({
             randomEvents: filtered_randomEvent,
             tubes: filtered_tubes
         }
+    },
+
+    getRandomName: function() {
+        return _.shuffle([
+            "Spirit",
+            "Deep space",
+            "Mariner",
+            "Opportunity",
+            "MAVEN",
+            "Sojourner",
+            "Odyssey"
+        ])[0];
     }
 });

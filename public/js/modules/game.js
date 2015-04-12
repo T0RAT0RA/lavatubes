@@ -20,12 +20,12 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
 
             this.bindEvents();
 
-            $(".register button, .register select").prop("disabled", false);
-            $(".loader, .game .loader").remove();
-
+            $(".register button, .register select, .player-name").prop("disabled", false);
             if (name = localStorage.getItem('playername')) {
                 $('.player-name').val(name);
             }
+            $(".loader, .game .loader").remove();
+
         },
 
         bindEvents: function () {
@@ -45,15 +45,16 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
                 socket.emit(Types.Messages.NEWGAME);
             });
 
-            $(".register .game-list").on("change", function() {
+            $(".register .game-list").on("click", ".join", function() {
                 var name = $('.player-name');
                 name.removeClass('error');
                 if (!name.val()) {
                     name.addClass('error');
                     return false;
                 }
-                if (!$(this).val()) { return; }
-                window.location = "/game/" + $(this).val();
+                var gameId = $(this).closest('[data-id]').attr('data-id');
+                if (!gameId) { return; }
+                window.location = "/game/" + gameId;
             });
 
             var matches = window.location.pathname.match(/game\/([^\/]*)\/?$/);
@@ -108,13 +109,14 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
         },
 
         updateGamesInfo: function (data) {
-            $(".register .game-list option:gt(0)").remove();
+            $(".register .game-list tr:gt(0)").remove();
             for (id in data.games) {
-                game = data.games[id];
-                $(".register .game-list").append($("<option>",{
-                    value: id,
-                    text: id + " (" + game.players + "/" + game.maxPlayers + ")"
-                }));
+                var game = data.games[id];
+                var tr = $('<tr>', {'data-id': id});
+                tr.append($('<td>').html(id));
+                tr.append($('<td>').html(game.players + "/" + game.maxPlayers));
+                tr.append($('<td>').html('<button class="join">Join</button>'));
+                $(".register .game-list").append(tr);
             }
         },
 

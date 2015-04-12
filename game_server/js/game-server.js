@@ -59,7 +59,7 @@ GameServer = cls.Class.extend({
             //Create a new run server
             socket.on(Types.Messages.NEWGAME, function() {
                 var maxTubes = 4;
-                game = new Game(_.uniqueId("game"), maxTubes, self);
+                game = new Game(_.uniqueId(), maxTubes, self);
                 game.run();
                 self.games[game.id] = game;
                 socket.emit(Types.Messages.NEWGAME, {success: true, game: game.id});
