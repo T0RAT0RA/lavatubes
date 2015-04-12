@@ -72,6 +72,7 @@ define(["io", "modules/gameRenderer"], function (io, GameRenderer) {
                     var input = $(this);
                     if (input.val()) {
                         socket.emit(Types.Messages.RADIO, input.val());
+                        $('.messages').animate({ scrollTop: $('.messages').height() }, "slow");
                     }
                     input.val('');
                 }
