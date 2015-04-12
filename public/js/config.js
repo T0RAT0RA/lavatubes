@@ -11,7 +11,7 @@ require.config({
         'underscore'        : 'lib/vendor/underscore-min',
         'bootstrap'         : 'lib/vendor/bootstrap.min',
         'toastr'            : 'lib/vendor/toastr',
-        'less'              : '//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.0/less.min'
+        'less'              : 'lib/vendor/less.min'
     },
     shim: {
         'bootstrap': {
