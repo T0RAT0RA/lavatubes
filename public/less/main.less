@@ -4,6 +4,7 @@ html, body {
     height: 100%;
     background-color: #000;
     color: #FFF;
+    font-family: Arial;
 }
 
 hr {
@@ -21,6 +22,10 @@ input {
 
 table {
     border-collapse: collapse;
+}
+
+p {
+    margin-top: 0;
 }
 
 .loader {
@@ -120,12 +125,6 @@ table {
         }
     }
     
-    p {
-        margin: 0 0 10px 0;
-        text-align: center;
-        font-size: 1.2em;
-    }
-    
     a {
         margin: 0 20px;
         font-family: "Arial";
@@ -178,6 +177,18 @@ table {
                 color: #FFF;
                 border-color: #FFF;
             }
+        }
+    }
+    
+    .about {
+        position:relative;
+        width: 80%;
+        margin: auto;
+        top: 450px;
+        
+        .team ul, .team ul li {
+            padding: 0;
+            list-style: none;
         }
     }
 }
